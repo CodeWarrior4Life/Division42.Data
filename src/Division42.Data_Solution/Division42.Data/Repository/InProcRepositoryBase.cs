@@ -9,15 +9,37 @@ namespace Division42.Data.Repository
     /// An in-process repository for unit testing and design-time support.
     /// </summary>
     /// <typeparam name="TEntity">The data structure on which this repository operates</typeparam>
-    public abstract class InProcRepositoryBase<TEntity> : IRepository<TEntity>
+    public abstract class InProcRepositoryBase<TEntity> : DisposableBase, IRepository<TEntity>
         where TEntity : class, new()
     {
+        /// <summary>
+        /// Creates a new instance of this type.
+        /// </summary>
+        protected InProcRepositoryBase()
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance of this type.
+        /// </summary>
+        /// <param name="initialList">Records to pre-include in the repository.</param>
+        protected InProcRepositoryBase(IEnumerable<TEntity> initialList)
+            : this()
+        {
+            if (initialList == null)
+                throw new ArgumentNullException("initialList");
+
+            _list.AddRange(initialList);
+        }
+
         /// <summary>
         /// Gets all records.
         /// </summary>
         public IEnumerable<TEntity> GetAll()
         {
-            return list;
+            CheckIfDisposed();
+
+            return _list;
         }
 
         /// <summary>
@@ -33,6 +55,8 @@ namespace Division42.Data.Repository
         /// <exception cref="ArgumentNullException"></exception>
         public TEntity GetByFilter(Expression<Func<TEntity, bool>> whereClause)
         {
+            CheckIfDisposed();
+
             if (whereClause == null)
                 throw new ArgumentNullException("whereClause");
 
@@ -46,10 +70,12 @@ namespace Division42.Data.Repository
         /// <exception cref="ArgumentNullException"></exception>
         public void Insert(TEntity instance)
         {
+            CheckIfDisposed();
+
             if (instance == null)
                 throw new ArgumentNullException("instance");
 
-            list.Add(instance);
+            _list.Add(instance);
         }
 
         /// <summary>
@@ -66,12 +92,14 @@ namespace Division42.Data.Repository
         /// <exception cref="ArgumentNullException"></exception>
         public void Delete(TEntity instance)
         {
+            CheckIfDisposed();
+
             if (instance == null)
                 throw new ArgumentNullException("instance");
 
-            list.Remove(instance);
+            _list.Remove(instance);
         }
 
-        private List<TEntity> list = new List<TEntity>();
+        private readonly List<TEntity> _list = new List<TEntity>();
     }
 }

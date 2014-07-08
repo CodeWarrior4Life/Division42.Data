@@ -39,12 +39,16 @@
     <Compile Include="DisposableBase.cs" />
     <Compile Include="IIOHelper.cs" />
     <Compile Include="ObservableBase.cs" />
-    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="NotifyPropertyChangedInvocatorAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\InProcRepositoryBase.cs" />
     <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\RepositoryException.cs" />
     <Compile Include="Repository\SqliteRepositoryBase.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="ViewModels\ViewModelException.cs" />
     <Compile Include="ViewModels\ViewModelRefresher.cs" />
   </ItemGroup>
   <ItemGroup>

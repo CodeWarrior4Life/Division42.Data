@@ -67,13 +67,14 @@ namespace Division42.Data.Repository
             }
             catch (SQLiteException exception)
             {
-                throw new DataException("Exception \"" + exception.GetType().ToString() 
+                throw new DataException<TEntity>("Exception \"" + exception.GetType().ToString() 
                     + "\" occurred while trying to connect to the database. " 
                     + exception.Message, exception)
                 {
                     ConnectionPool = ConnectionPool,
                     ConnectionString = SqliteConnectionString,
-                    Platform = SqlitePlatform
+                    Platform = SqlitePlatform,
+                    Repository = this
                 };
             }
         }
@@ -101,13 +102,14 @@ namespace Division42.Data.Repository
             }
             catch (SQLiteException exception)
             {
-                throw new DataException("Exception \"" + exception.GetType().ToString() 
+                throw new DataException<TEntity>("Exception \"" + exception.GetType().ToString() 
                     + "\" occurred while trying to connect to the database. " 
                     + exception.Message, exception)
                 {
                     ConnectionPool = ConnectionPool,
                     ConnectionString = SqliteConnectionString,
-                    Platform = SqlitePlatform
+                    Platform = SqlitePlatform,
+                    Repository = this
                 };
             }
         }
@@ -131,13 +133,14 @@ namespace Division42.Data.Repository
             }
             catch (SQLiteException exception)
             {
-                throw new DataException("Exception \"" + exception.GetType().ToString() 
+                throw new DataException<TEntity>("Exception \"" + exception.GetType().ToString() 
                     + "\" occurred while trying to connect to the database. " 
                     + exception.Message, exception)
                 {
                     ConnectionPool = ConnectionPool,
                     ConnectionString = SqliteConnectionString,
-                    Platform = SqlitePlatform
+                    Platform = SqlitePlatform,
+                    Repository = this
                 };
             }
         }
@@ -165,13 +168,14 @@ namespace Division42.Data.Repository
             }
             catch (SQLiteException exception)
             {
-                throw new DataException("Exception \"" + exception.GetType().ToString() 
+                throw new DataException<TEntity>("Exception \"" + exception.GetType().ToString() 
                     + "\" occurred while trying to connect to the database. " 
                     + exception.Message, exception)
                 {
                     ConnectionPool = ConnectionPool,
                     ConnectionString = SqliteConnectionString,
-                    Platform = SqlitePlatform
+                    Platform = SqlitePlatform,
+                    Repository = this
                 };
             }
         }
@@ -199,13 +203,14 @@ namespace Division42.Data.Repository
             }
             catch (SQLiteException exception)
             {
-                throw new DataException("Exception \"" + exception.GetType().ToString() 
+                throw new DataException<TEntity>("Exception \"" + exception.GetType().ToString() 
                     + "\" occurred while trying to connect to the database. " 
                     + exception.Message, exception)
                 {
                     ConnectionPool = ConnectionPool,
                     ConnectionString = SqliteConnectionString,
-                    Platform = SqlitePlatform
+                    Platform = SqlitePlatform,
+                    Repository = this
                 };
             }
         }
@@ -233,13 +238,14 @@ namespace Division42.Data.Repository
             }
             catch (SQLiteException exception)
             {
-                throw new DataException("Exception \"" + exception.GetType().ToString() 
+                throw new DataException<TEntity>("Exception \"" + exception.GetType().ToString() 
                     + "\" occurred while trying to connect to the database. " 
                     + exception.Message, exception)
                 {
                     ConnectionPool = ConnectionPool,
                     ConnectionString = SqliteConnectionString,
-                    Platform = SqlitePlatform
+                    Platform = SqlitePlatform,
+                    Repository = this
                 };
             }
         }

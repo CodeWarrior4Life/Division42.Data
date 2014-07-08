@@ -14,6 +14,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{90ABBC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Division42.Data.Tests", "Division42.Data.Tests\Division42.Data.Tests.csproj", "{91A35B29-CF34-4A07-B107-78DC4E9CF74B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F475E646-8AA9-4DE7-807E-F45618A379A1}"
+	ProjectSection(SolutionItems) = preProject
+		Default.runsettings = Default.runsettings
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

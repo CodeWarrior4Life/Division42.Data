@@ -8,7 +8,8 @@ namespace Division42.Data.Repository
     /// Interface for interacting with an entity in an underlying data store.
     /// </summary>
     /// <typeparam name="TEntity">The data structure type on which this repository operates.</typeparam>
-    public interface IRepository<TEntity> where TEntity : class, new()
+    public interface IRepository<TEntity> : IDisposable
+        where TEntity : class, new()
     {
         /// <summary>
         /// Gets all records.

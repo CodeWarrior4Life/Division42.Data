@@ -1,7 +1,6 @@
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Division42.Data.Properties;
 
 namespace Division42.Data
 {

@@ -49,6 +49,7 @@ namespace Division42.Data.ViewModels
         /// <returns></returns>
         public Boolean CanExecute(Object parameter)
         {
+            // Ignore "parameter"
             return _canExecute;
         }
 
@@ -58,6 +59,7 @@ namespace Division42.Data.ViewModels
         /// <param name="parameter"></param>
         public void Execute(Object parameter)
         {
+            // Ignore "parameter"
             _canExecute = false;
             NotifyCanExecuteChanged();
 
