@@ -8,7 +8,18 @@ namespace Division42.Data.Repository
     /// Interface for interacting with an entity in an underlying data store.
     /// </summary>
     /// <typeparam name="TEntity">The data structure type on which this repository operates.</typeparam>
-    public interface IRepository<TEntity> : IDisposable
+    public interface IRepository<TEntity> : IRepository<TEntity, Guid>
+        where TEntity : class, new()
+    {
+        
+    }
+
+    /// <summary>
+    /// Interface for interacting with an entity in an underlying data store.
+    /// </summary>
+    /// <typeparam name="TEntity">The data structure type on which this repository operates.</typeparam>
+    /// <typeparam name="TKey">The data type of the primary key.</typeparam>
+    public interface IRepository<TEntity, in TKey> : IDisposable
         where TEntity : class, new()
     {
         /// <summary>
@@ -20,7 +31,7 @@ namespace Division42.Data.Repository
         /// Gets a record by the specified ID.
         /// </summary>
         /// <param name="id">The id, or primary key of the record to retrieve.</param>
-        TEntity GetById(Guid id);
+        TEntity GetById(TKey id);
 
         /// <summary>
         /// Gets a record by the specified <paramref name="whereClause"/> condition.
