@@ -1,4 +1,5 @@
-﻿using Division42.Data.Repository;
+﻿using System;
+using Division42.Data.Repository;
 using Division42.Data.ViewModels;
 
 namespace Division42.Data.Tests.Mocks
@@ -9,7 +10,8 @@ namespace Division42.Data.Tests.Mocks
         /// Creates a new instance of this type.
         /// </summary>
         /// <param name="repository">The repository to use for the primary data type.</param>
-        public CustomerViewModel(IRepository<Customer> repository) : base(repository)
+        public CustomerViewModel(IRepository<Customer, Guid> repository)
+            : base(repository)
         {
         }
     }

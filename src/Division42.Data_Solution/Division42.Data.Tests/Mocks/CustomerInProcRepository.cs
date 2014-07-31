@@ -5,7 +5,7 @@ using Division42.Data.Repository;
 
 namespace Division42.Data.Tests.Mocks
 {
-    public class CustomerInProcRepository : InProcRepositoryBase<Customer>
+    public class CustomerInProcRepository : InProcRepositoryBase<Customer, Guid>
     {
         /// <summary>
         /// Creates a new instance of this type.

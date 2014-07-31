@@ -11,7 +11,7 @@ namespace Division42.Data.Tests.ViewModels
         [TestMethod]
         public void ConstructorWithValidRepository_ShouldReturnValidInstance()
         {
-            IRepository<Customer> repository = new CustomerInProcRepository();
+            IRepository<Customer, Guid> repository = new CustomerInProcRepository();
             CustomerViewModel instance = new CustomerViewModel(repository);
 
             Assert.IsNotNull(instance);
@@ -21,7 +21,7 @@ namespace Division42.Data.Tests.ViewModels
         [ExpectedException(typeof(ArgumentNullException))]
         public void ConstructorWithNullRepository_ShouldThrowArgumentNullException()
         {
-            IRepository<Customer> repository = null;
+            IRepository<Customer, Guid> repository = null;
             CustomerViewModel instance = new CustomerViewModel(repository);
 
             Assert.Fail("Should have thrown an ArgumentNullException.");
@@ -30,7 +30,7 @@ namespace Division42.Data.Tests.ViewModels
         [TestMethod]
         public void EnsureDisposableIsImplemented_ShouldNotThrowException()
         {
-            IRepository<Customer> repository = new CustomerInProcRepository();
+            IRepository<Customer, Guid> repository = new CustomerInProcRepository();
             using (CustomerViewModel instance = new CustomerViewModel(repository))
             {
             }
@@ -39,7 +39,7 @@ namespace Division42.Data.Tests.ViewModels
         [TestMethod]
         public void InvokeRefresh_ShouldNotThrowException()
         {
-            IRepository<Customer> repository = new CustomerInProcRepository();
+            IRepository<Customer, Guid> repository = new CustomerInProcRepository();
             using (CustomerViewModel instance = new CustomerViewModel(repository))
             {
                 instance.Refresh.Execute(null);

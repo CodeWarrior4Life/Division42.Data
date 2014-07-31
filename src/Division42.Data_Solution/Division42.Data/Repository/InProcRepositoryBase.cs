@@ -9,7 +9,8 @@ namespace Division42.Data.Repository
     /// An in-process repository for unit testing and design-time support.
     /// </summary>
     /// <typeparam name="TEntity">The data structure on which this repository operates</typeparam>
-    public abstract class InProcRepositoryBase<TEntity> : DisposableBase, IRepository<TEntity>
+    /// <typeparam name="TKey">The data type of the primary key.</typeparam>
+    public abstract class InProcRepositoryBase<TEntity, TKey> : DisposableBase, IRepository<TEntity, TKey>
         where TEntity : class, new()
     {
         /// <summary>
@@ -46,7 +47,7 @@ namespace Division42.Data.Repository
         /// Gets a record by the specified ID.
         /// </summary>
         /// <param name="id">The id, or primary key of the record to retrieve.</param>
-        public abstract TEntity GetById(Guid id);
+        public abstract TEntity GetById(TKey id);
 
         /// <summary>
         /// Gets a record by the specified <paramref name="whereClause"/> condition.
@@ -101,5 +102,28 @@ namespace Division42.Data.Repository
         }
 
         private readonly List<TEntity> _list = new List<TEntity>();
+    }
+
+    /// <summary>
+    /// An in-process repository for unit testing and design-time support.
+    /// </summary>
+    /// <typeparam name="TEntity">The data structure on which this repository operates</typeparam>
+    public abstract class InProcRepositoryBase<TEntity> : InProcRepositoryBase<TEntity, Guid>
+        where TEntity : class, new()
+    {
+        /// <summary>
+        /// Creates a new instance of this type.
+        /// </summary>
+        protected InProcRepositoryBase() : base()
+        {
+        }
+
+        /// <summary>
+        /// Creates a new instance of this type.
+        /// </summary>
+        /// <param name="initialList">Records to pre-include in the repository.</param>
+        protected InProcRepositoryBase(IEnumerable<TEntity> initialList) : base(initialList)
+        {
+        }
     }
 }

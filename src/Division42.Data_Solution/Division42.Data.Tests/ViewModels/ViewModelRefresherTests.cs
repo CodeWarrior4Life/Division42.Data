@@ -13,7 +13,7 @@ namespace Division42.Data.Tests.ViewModels
         [TestMethod]
         public void ConstructorWithValidArguments_ShouldReturnValidInstance()
         {
-            IRepository<Customer> repository = new CustomerInProcRepository();
+            IRepository<Customer,Guid> repository = new CustomerInProcRepository();
             ObservableCollection<Customer> collection = new ObservableCollection<Customer>();
             ViewModelRefresher<Customer> instance = new ViewModelRefresher<Customer>(collection, repository);
 
@@ -24,7 +24,7 @@ namespace Division42.Data.Tests.ViewModels
         [ExpectedException(typeof(ArgumentNullException))]
         public void ConstructorWithNullCollection_ShouldThrowArgumentNullException()
         {
-            IRepository<Customer> repository = new CustomerInProcRepository();
+            IRepository<Customer, Guid> repository = new CustomerInProcRepository();
             ObservableCollection<Customer> collection = null;
             ViewModelRefresher<Customer> instance = new ViewModelRefresher<Customer>(collection, repository);
 
@@ -35,7 +35,7 @@ namespace Division42.Data.Tests.ViewModels
         [ExpectedException(typeof(ArgumentNullException))]
         public void ConstructorWithNullRepository_ShouldThrowArgumentNullException()
         {
-            IRepository<Customer> repository = null;
+            IRepository<Customer, Guid> repository = null;
             ObservableCollection<Customer> collection = new ObservableCollection<Customer>();
             ViewModelRefresher<Customer> instance = new ViewModelRefresher<Customer>(collection, repository);
 
@@ -48,7 +48,7 @@ namespace Division42.Data.Tests.ViewModels
             Boolean expected = true;
             Boolean actual = false;
 
-            IRepository<Customer> repository = new CustomerInProcRepository();
+            IRepository<Customer, Guid> repository = new CustomerInProcRepository();
             ObservableCollection<Customer> collection = new ObservableCollection<Customer>();
             ViewModelRefresher<Customer> instance = new ViewModelRefresher<Customer>(collection, repository);
 
@@ -63,7 +63,7 @@ namespace Division42.Data.Tests.ViewModels
             Int32 expected = 2;
             Int32 actual = 0;
 
-            IRepository<Customer> repository = new CustomerInProcRepository();
+            IRepository<Customer, Guid> repository = new CustomerInProcRepository();
             ObservableCollection<Customer> collection = new ObservableCollection<Customer>();
             ViewModelRefresher<Customer> instance = new ViewModelRefresher<Customer>(collection, repository);
 
@@ -80,7 +80,7 @@ namespace Division42.Data.Tests.ViewModels
             Int32 expected = 1;
             Int32 actual = 0;
 
-            IRepository<Customer> repository = new CustomerInProcRepository();
+            IRepository<Customer, Guid> repository = new CustomerInProcRepository();
             ObservableCollection<Customer> collection = new ObservableCollection<Customer>();
             repository.Insert(new Customer() { CustomerId = Guid.NewGuid() });
 
@@ -98,7 +98,7 @@ namespace Division42.Data.Tests.ViewModels
             Int32 expected = 0;
             Int32 actual = 0;
 
-            IRepository<Customer> repository = new CustomerInProcRepository();
+            IRepository<Customer, Guid> repository = new CustomerInProcRepository();
             ObservableCollection<Customer> collection = new ObservableCollection<Customer>();
             collection.Add(new Customer() { CustomerId = Guid.NewGuid() });
 

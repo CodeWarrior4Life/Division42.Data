@@ -9,19 +9,20 @@ namespace Division42.Data.ViewModels
     /// Abstract base implementation of a ViewModel which provides some common features.
     /// </summary>
     /// <typeparam name="TEntity">The primary data structure type on which this ViewModel operates.</typeparam>
-    public abstract class ViewModelBase<TEntity> : DisposableBase
+    /// <typeparam name="TKey">The data type of the primary key.</typeparam>
+    public abstract class ViewModelBase<TEntity, TKey> : DisposableBase
         where TEntity : class, new()
     {
         /// <summary>
         /// Gets the current repository.
         /// </summary>
-        public IRepository<TEntity> Repository { get; protected set; }
+        public IRepository<TEntity, TKey> Repository { get; protected set; }
 
         /// <summary>
         /// Creates a new instance of this type.
         /// </summary>
         /// <param name="repository">The repository to use for the primary data type.</param>
-        protected ViewModelBase(IRepository<TEntity> repository)
+        protected ViewModelBase(IRepository<TEntity, TKey> repository)
         {
             if (repository == null)
                 throw new ArgumentNullException("repository");
@@ -38,7 +39,7 @@ namespace Division42.Data.ViewModels
             get
             {
                 if (_refresh == null)
-                    _refresh = new ViewModelRefresher<TEntity>(this.Entities, Repository);
+                    _refresh = new ViewModelRefresher<TEntity, TKey>(this.Entities, Repository);
 
                 return _refresh;
             }
@@ -64,6 +65,22 @@ namespace Division42.Data.ViewModels
             }
 
             base.Dispose(isDisposing);
+        }
+    }
+
+    /// <summary>
+    /// Abstract base implementation of a ViewModel which provides some common features.
+    /// </summary>
+    /// <typeparam name="TEntity">The primary data structure type on which this ViewModel operates.</typeparam>
+    public abstract class ViewModelBase<TEntity> : ViewModelBase<TEntity, Guid>
+        where TEntity : class, new()
+    {
+        /// <summary>
+        /// Creates a new instance of this type.
+        /// </summary>
+        /// <param name="repository">The repository to use for the primary data type.</param>
+        protected ViewModelBase(IRepository<TEntity, Guid> repository) : base(repository)
+        {
         }
     }
 }

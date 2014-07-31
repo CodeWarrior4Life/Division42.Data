@@ -11,7 +11,8 @@ namespace Division42.Data.ViewModels
     /// Class to refresh a ViewModel observable property from an underlying repository.
     /// </summary>
     /// <typeparam name="TEntity">The data type on which the observable collection operates.</typeparam>
-    public class ViewModelRefresher<TEntity> : ICommand where TEntity : class, new()
+    /// <typeparam name="TKey">The data type of the primary key.</typeparam>
+    public class ViewModelRefresher<TEntity, TKey> : ICommand where TEntity : class, new()
     {
         /// <summary>
         /// Gets the collection in the ViewModel to refresh.
@@ -21,7 +22,7 @@ namespace Division42.Data.ViewModels
         /// <summary>
         /// Gets the repository that is to be used to refresh the observable collection.
         /// </summary>
-        public IRepository<TEntity> Repository { get; protected set; }
+        public IRepository<TEntity, TKey> Repository { get; protected set; }
 
         /// <summary>
         /// Creates a new instance of this type.
@@ -30,7 +31,7 @@ namespace Division42.Data.ViewModels
         /// <param name="repository">The repository to use to refresh the collection.</param>
         /// <exception cref="ArgumentNullException"></exception>
         public ViewModelRefresher(ObservableCollection<TEntity> collectionToRefresh, 
-            IRepository<TEntity> repository)
+            IRepository<TEntity,TKey> repository)
         {
             if (collectionToRefresh == null)
                 throw new ArgumentNullException("collectionToRefresh");
@@ -102,5 +103,23 @@ namespace Division42.Data.ViewModels
         /// Private field to store the state of whether this command can execute or not.
         /// </summary>
         private Boolean _canExecute = true;
+    }
+
+    /// <summary>
+    /// Class to refresh a ViewModel observable property from an underlying repository.
+    /// </summary>
+    /// <typeparam name="TEntity">The data type on which the observable collection operates.</typeparam>
+    public class ViewModelRefresher<TEntity> : ViewModelRefresher<TEntity, Guid> where TEntity : class, new()
+    {
+        /// <summary>
+        /// Creates a new instance of this type.
+        /// </summary>
+        /// <param name="collectionToRefresh">The ViewModel observable collection to refresh.</param>
+        /// <param name="repository">The repository to use to refresh the collection.</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public ViewModelRefresher(ObservableCollection<TEntity> collectionToRefresh,
+            IRepository<TEntity, Guid> repository) : base(collectionToRefresh, repository)
+        {
+        }
     }
 }
