@@ -22,8 +22,7 @@ namespace Division42.Data
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] String propertyName = null)
         {
-            if (String.IsNullOrWhiteSpace(propertyName))
-                throw new ArgumentException("Argument \"propertyName\" cannot be null or empty.", "propertyName");
+            // Don't check for String.IsNullOrEmpty, because an empty property is populate by CallerMemberName.
 
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));

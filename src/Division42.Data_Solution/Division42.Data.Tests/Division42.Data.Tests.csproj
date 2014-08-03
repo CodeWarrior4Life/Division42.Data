@@ -66,6 +66,8 @@
     <Compile Include="Mocks\CustomerInProcRepository.cs" />
     <Compile Include="Mocks\CustomerSqliteRepository.cs" />
     <Compile Include="Mocks\CustomerViewModel.cs" />
+    <Compile Include="Mocks\CustomerWithInferredKeyInProcRepository.cs" />
+    <Compile Include="Mocks\CustomerWithInferredKeySqliteRepository.cs" />
     <Compile Include="Mocks\DisposableMock.cs" />
     <Compile Include="DisposableBaseTests.cs" />
     <Compile Include="NotifyPropertyChangedInvocatorAttributeTests.cs" />

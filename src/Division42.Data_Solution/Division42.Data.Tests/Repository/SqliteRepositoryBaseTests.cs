@@ -56,7 +56,7 @@ namespace Division42.Data.Tests.Repository
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DataException<Customer>))]
+        [ExpectedException(typeof(DataException<Customer,Guid>))]
         public void GetAllWithMissingDBFile_ShouldThrowException()
         {
             SQLitePlatformWin32 platform = new SQLitePlatformWin32();
@@ -71,7 +71,7 @@ namespace Division42.Data.Tests.Repository
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DataException<Customer>))]
+        [ExpectedException(typeof(DataException<Customer, Guid>))]
         public void GetByIdWithMissingDBFile_ShouldThrowException()
         {
             SQLitePlatformWin32 platform = new SQLitePlatformWin32();
@@ -86,7 +86,7 @@ namespace Division42.Data.Tests.Repository
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DataException<Customer>))]
+        [ExpectedException(typeof(DataException<Customer, Guid>))]
         public void GetByFilterWithValidArgumentAndMissingDBFile_ShouldThrowException()
         {
             SQLitePlatformWin32 platform = new SQLitePlatformWin32();
@@ -116,7 +116,7 @@ namespace Division42.Data.Tests.Repository
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DataException<Customer>))]
+        [ExpectedException(typeof(DataException<Customer, Guid>))]
         public void InsertWithMissingDBFile_ShouldThrowException()
         {
             SQLitePlatformWin32 platform = new SQLitePlatformWin32();
@@ -131,7 +131,7 @@ namespace Division42.Data.Tests.Repository
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DataException<Customer>))]
+        [ExpectedException(typeof(DataException<Customer, Guid>))]
         public void UpdateWithMissingDBFile_ShouldThrowException()
         {
             SQLitePlatformWin32 platform = new SQLitePlatformWin32();
@@ -146,7 +146,7 @@ namespace Division42.Data.Tests.Repository
         }
 
         [TestMethod]
-        [ExpectedException(typeof(DataException<Customer>))]
+        [ExpectedException(typeof(DataException<Customer, Guid>))]
         public void DeleteWithMissingDBFile_ShouldThrowException()
         {
             SQLitePlatformWin32 platform = new SQLitePlatformWin32();
@@ -159,7 +159,6 @@ namespace Division42.Data.Tests.Repository
                 Assert.Fail("Should have thrown a DataException.");
             }
         }
-
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentNullException))]
@@ -199,6 +198,199 @@ namespace Division42.Data.Tests.Repository
             SQLiteConnectionString connectionString = new SQLiteConnectionString("C:\\Bogus\\DoesNotExist.db", false);
 
             using (CustomerSqliteRepository repository = new CustomerSqliteRepository(platform, connectionString))
+            {
+                repository.Delete(null);
+
+                Assert.Fail("Should have thrown an ArgumentNullException.");
+            }
+        }
+
+
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void InferredKeyConstructorWithNullPlatform_ShouldThrowException()
+        {
+            SQLitePlatformWin32 platform = null;
+            SQLiteConnectionString connectionString = new SQLiteConnectionString("C:\\Bogus\\DoesNotExist.db", false);
+
+            using (CustomerWithInferredKeySqliteRepository repository = new CustomerWithInferredKeySqliteRepository(platform, connectionString))
+            {
+                Assert.Fail("Should have thrown an ArgumentNullException.");
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void InferredKeyConstructorWithNullConnectionString_ShouldThrowException()
+        {
+            SQLitePlatformWin32 platform = new SQLitePlatformWin32();
+            SQLiteConnectionString connectionString = null;
+
+            using (CustomerWithInferredKeySqliteRepository repository = new CustomerWithInferredKeySqliteRepository(platform, connectionString))
+            {
+                Assert.Fail("Should have thrown an ArgumentNullException.");
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ObjectDisposedException))]
+        public void InferredKeyGetAllAfterDispose_ShouldThrowException()
+        {
+            SQLitePlatformWin32 platform = new SQLitePlatformWin32();
+            SQLiteConnectionString connectionString = new SQLiteConnectionString("C:\\Bogus\\DoesNotExist.db", false);
+
+            CustomerWithInferredKeySqliteRepository repository = new CustomerWithInferredKeySqliteRepository(platform, connectionString);
+
+            repository.Dispose();
+            repository.GetAll().ToList();
+
+            Assert.Fail("Should have thrown an ObjectDisposedException.");
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DataException<Customer, Guid>))]
+        public void InferredKeyGetAllWithMissingDBFile_ShouldThrowException()
+        {
+            SQLitePlatformWin32 platform = new SQLitePlatformWin32();
+            SQLiteConnectionString connectionString = new SQLiteConnectionString("C:\\Bogus\\DoesNotExist.db", false);
+
+            using (CustomerWithInferredKeySqliteRepository repository = new CustomerWithInferredKeySqliteRepository(platform, connectionString))
+            {
+                repository.GetAll().ToList();
+
+                Assert.Fail("Should have thrown a DataException.");
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DataException<Customer, Guid>))]
+        public void InferredKeyGetByIdWithMissingDBFile_ShouldThrowException()
+        {
+            SQLitePlatformWin32 platform = new SQLitePlatformWin32();
+            SQLiteConnectionString connectionString = new SQLiteConnectionString("C:\\Bogus\\DoesNotExist.db", false);
+
+            using (CustomerWithInferredKeySqliteRepository repository = new CustomerWithInferredKeySqliteRepository(platform, connectionString))
+            {
+                repository.GetById(Guid.NewGuid());
+
+                Assert.Fail("Should have thrown a DataException.");
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DataException<Customer, Guid>))]
+        public void InferredKeyGetByFilterWithValidArgumentAndMissingDBFile_ShouldThrowException()
+        {
+            SQLitePlatformWin32 platform = new SQLitePlatformWin32();
+            SQLiteConnectionString connectionString = new SQLiteConnectionString("C:\\Bogus\\DoesNotExist.db", false);
+
+            using (CustomerWithInferredKeySqliteRepository repository = new CustomerWithInferredKeySqliteRepository(platform, connectionString))
+            {
+                repository.GetByFilter(item => item.CustomerId == Guid.NewGuid());
+
+                Assert.Fail("Should have thrown a DataException.");
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void InferredKeyGetByFilterWithNullArgument_ShouldThrowException()
+        {
+            SQLitePlatformWin32 platform = new SQLitePlatformWin32();
+            SQLiteConnectionString connectionString = new SQLiteConnectionString("C:\\Bogus\\DoesNotExist.db", false);
+
+            using (CustomerWithInferredKeySqliteRepository repository = new CustomerWithInferredKeySqliteRepository(platform, connectionString))
+            {
+                repository.GetByFilter(null);
+
+                Assert.Fail("Should have thrown an ArgumentNullException.");
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DataException<Customer, Guid>))]
+        public void InferredKeyInsertWithMissingDBFile_ShouldThrowException()
+        {
+            SQLitePlatformWin32 platform = new SQLitePlatformWin32();
+            SQLiteConnectionString connectionString = new SQLiteConnectionString("C:\\Bogus\\DoesNotExist.db", false);
+
+            using (CustomerWithInferredKeySqliteRepository repository = new CustomerWithInferredKeySqliteRepository(platform, connectionString))
+            {
+                repository.Insert(new Customer() { CustomerId = Guid.NewGuid() });
+
+                Assert.Fail("Should have thrown a DataException.");
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DataException<Customer, Guid>))]
+        public void InferredKeyUpdateWithMissingDBFile_ShouldThrowException()
+        {
+            SQLitePlatformWin32 platform = new SQLitePlatformWin32();
+            SQLiteConnectionString connectionString = new SQLiteConnectionString("C:\\Bogus\\DoesNotExist.db", false);
+
+            using (CustomerWithInferredKeySqliteRepository repository = new CustomerWithInferredKeySqliteRepository(platform, connectionString))
+            {
+                repository.Update(new Customer() { CustomerId = Guid.NewGuid() });
+
+                Assert.Fail("Should have thrown a DataException.");
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DataException<Customer, Guid>))]
+        public void InferredKeyDeleteWithMissingDBFile_ShouldThrowException()
+        {
+            SQLitePlatformWin32 platform = new SQLitePlatformWin32();
+            SQLiteConnectionString connectionString = new SQLiteConnectionString("C:\\Bogus\\DoesNotExist.db", false);
+
+            using (CustomerWithInferredKeySqliteRepository repository = new CustomerWithInferredKeySqliteRepository(platform, connectionString))
+            {
+                repository.Delete(new Customer() { CustomerId = Guid.NewGuid() });
+
+                Assert.Fail("Should have thrown a DataException.");
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void InferredKeyInsertWithNullArgument_ShouldThrowException()
+        {
+            SQLitePlatformWin32 platform = new SQLitePlatformWin32();
+            SQLiteConnectionString connectionString = new SQLiteConnectionString("C:\\Bogus\\DoesNotExist.db", false);
+
+            using (CustomerWithInferredKeySqliteRepository repository = new CustomerWithInferredKeySqliteRepository(platform, connectionString))
+            {
+                repository.Insert(null);
+
+                Assert.Fail("Should have thrown an ArgumentNullException.");
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void InferredKeyUpdateWithNullArgument_ShouldThrowException()
+        {
+            SQLitePlatformWin32 platform = new SQLitePlatformWin32();
+            SQLiteConnectionString connectionString = new SQLiteConnectionString("C:\\Bogus\\DoesNotExist.db", false);
+
+            using (CustomerWithInferredKeySqliteRepository repository = new CustomerWithInferredKeySqliteRepository(platform, connectionString))
+            {
+                repository.Update(null);
+
+                Assert.Fail("Should have thrown an ArgumentNullException.");
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void InferredKeyDeleteWithNullArgument_ShouldThrowException()
+        {
+            SQLitePlatformWin32 platform = new SQLitePlatformWin32();
+            SQLiteConnectionString connectionString = new SQLiteConnectionString("C:\\Bogus\\DoesNotExist.db", false);
+
+            using (CustomerWithInferredKeySqliteRepository repository = new CustomerWithInferredKeySqliteRepository(platform, connectionString))
             {
                 repository.Delete(null);
 
