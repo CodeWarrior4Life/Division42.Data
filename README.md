@@ -3,7 +3,7 @@ Division42.Data
 .NET portable class library (PCL) for managing SQLite and other data access across multiple platforms, including Xamarin support.
 
 ##What is this?
-This is the Visual Studio 2013 / C# / Portable Class Library source code for the "Division42.Data - PCL" NuGet package found [here](http://todo).
+This is the Visual Studio 2013 / C# / Portable Class Library source code for the "Division42.Data - PCL" NuGet package found [here](https://www.nuget.org/packages/Division42.Data-PCL/).
 
 ##What does it do?
 This is a library which wraps the [SQLite.NET PCL](https://www.nuget.org/packages/SQLite.Net-PCL/) functionality with the [Repository Pattern](http://www.remondo.net/repository-pattern-example-csharp/). There are also helpers for working with MVVM, such as an `ICommand` class which refreshes `ObservableCollection<T>`
